@@ -61,6 +61,8 @@ const App = () => {
           <h2>View users</h2>
           <UserTable users={users} 
             editRow={editRow} deleteUser={deleteUser} 
+            setEditing={setEditing} currentUser={currentUser}
+            updateUser={updateUser}
           />
         </div>
       </div>

@@ -36,12 +36,12 @@ const EditUserForm = (props) => {
         value={user.username}
         onChange={handleInputChange}
       />
-      <button>Update user</button>
+      <button>編集完了</button>
       <button
         onClick={() => props.setEditing(false)}
         className="button muted-button"
       >
-        Cancel
+        キャンセル
       </button>
     </form>
   )
