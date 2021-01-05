@@ -4,6 +4,16 @@ import React, { useState, useEffect } from 'react'
 const EditUserForm = (props) => {
   const [user, setUser] = useState(props.currentUser)
 
+  const [open, setOpen] = React.useState(true);
+
+  const handleOpen = () => {
+      setOpen(true);
+  };
+
+  const handleClose = () => {
+      setOpen(false);
+  };
+
   useEffect(() => {
     setUser(props.currentUser)
   }, [props])
@@ -36,7 +46,7 @@ const EditUserForm = (props) => {
         value={user.username}
         onChange={handleInputChange}
       />
-      <button>編集完了</button>
+      <button onClick={handleClose}>編集完了</button>
       <button
         onClick={() => props.setEditing(false)}
         className="button muted-button"

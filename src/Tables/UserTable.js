@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EditUserForm from '../forms/EditUserForm'
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -23,6 +23,8 @@ const UserTable = (props) => {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
+    // 追加
+    const [user, setUser] = useState(props.currentUser)
 
     const handleOpen = () => {
         setOpen(true);
@@ -31,6 +33,13 @@ const UserTable = (props) => {
     const handleClose = () => {
         setOpen(false);
     };
+
+    // 追加
+    const handleInputChange = (event) => {
+        const { name, value } = event.target
+    
+        setUser({ ...user, [name]: value })
+      }
 
     return (
         <table>
@@ -52,14 +61,15 @@ const UserTable = (props) => {
                             onClick={() => {
                                 props.editRow(user)
                             }}
+                            onClick={handleOpen}
                             className="button muted-button"
                             >
                             Edit
                         </button>
                         {/* 追加 */}
-                        <button type="button" onClick={handleOpen}>
+                        {/* <button type="button" onClick={handleOpen}>
                             react-transition-group
-                        </button>
+                        </button> */}
                         <Modal
                             aria-labelledby="transition-modal-title"
                             aria-describedby="transition-modal-description"
@@ -75,11 +85,42 @@ const UserTable = (props) => {
                             <Fade in={open}>
                             <div className={classes.paper}>
                                 <h2 id="transition-modal-title">編集してください</h2>
-                                <EditUserForm
+                                {/* 追加　 */}
+                                <form
+                                    onSubmit={(event) => {
+                                        event.preventDefault()
+
+                                        props.updateUser(user.id, user)
+                                    }}
+                                    >
+                                    <label>Name</label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={user.name}
+                                        onChange={handleInputChange}
+                                    />
+                                    <label>Username</label>
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={user.username}
+                                        onChange={handleInputChange}
+                                    />
+                                    <button onClick={handleClose}>編集完了</button>
+                                    <button
+                                        onClick={() => props.setEditing(false)}
+                                        onClick={handleClose}
+                                        className="button muted-button"
+                                    >
+                                        キャンセル
+                                    </button>
+                                    </form>
+                                {/* <EditUserForm
                                     setEditing={props.setEditing}
                                     currentUser={props.currentUser}
                                     updateUser={props.updateUser}
-                                />
+                                /> */}
                             </div>
                             </Fade>
                         </Modal>
